@@ -90,3 +90,8 @@ article ul {
 .indent {
   padding-left: 1em;
 }
+
+/** Internet Explorer is stupid **/
+a img {
+  border: 0;
+}
