@@ -1,5 +1,5 @@
 body, textarea, input, button {
-  background-image: url("birds.png");
+  background-image: url("../images/birds.png");
   background-position: top center;
   background-repeat: no-repeat;
   font-family: "Georgia", "Times New Roman", Times, serif;
@@ -89,6 +89,10 @@ article ul {
 /** Miscellaneous styling **/
 .indent {
   padding-left: 1em;
+}
+sup {
+  font-size: 0.7em;
+  vertical-align: top;
 }
 
 /** Internet Explorer is stupid **/

@@ -42,4 +42,4 @@ files.each do |input|
 end
 
 puts "Moving static assets"
-FileUtils.cp Dir.glob(File.join(THIS_DIR, "static", "*")), output_dir
+FileUtils.cp_r Dir.glob(File.join(THIS_DIR, "static", "*")), output_dir
