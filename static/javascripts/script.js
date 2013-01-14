@@ -4,7 +4,8 @@ var WEDDING_DATE = new Date(2013, 4, 27);
 // Floating the navigation bar
 function stickyNav() {
   var $nav = $("nav");
-  var minVert = $nav.parent().offset().top;
+  var $parent = $nav.parent();
+  var minVert = $parent.offset().top + parseInt($parent.css("padding-top"));
   var isFixed = false;
   var $win = $(window);
 
@@ -16,7 +17,6 @@ function stickyNav() {
         $nav.css({
           position: "fixed",
           top: 0,
-          left: $nav.offset().left,
           width: $nav.width()
         });
         isFixed = true;
@@ -56,7 +56,7 @@ function pjaxNav() {
     // Move currently highlighted link
     $nav_anchors.removeClass("current");
     $a.addClass("current");
-    var title = $a.text();
+    var title = $a.data("title") || $a.text();
 
     $.ajax({
       url: partialsPath(href)

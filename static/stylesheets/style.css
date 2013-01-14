@@ -33,9 +33,13 @@ article {
 footer {
   clear: both;
   color: #999;
-  font-size: smaller;
+  font-size: 12px;
   margin-top: 5em;
   text-align: center;
+}
+footer p {
+  margin: 0 auto;
+  max-width: 320px;
 }
 
 /** Titles **/
