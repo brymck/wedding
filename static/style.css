@@ -1,0 +1,91 @@
+body, textarea, input, button {
+  background-image: url("birds.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  font-size: large;
+}
+header, #container {
+  margin: 0 auto;
+  padding: 1em;
+}
+header {
+  width: 640px;
+}
+#container {
+  max-width: 760px;
+}
+nav {
+  float: left;
+  text-align: center;
+  width: 100px;
+}
+nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+nav ul li + li {
+  padding-top: 1em;
+}
+article {
+  padding-left: 120px;
+}
+footer {
+  clear: both;
+  color: #999;
+  font-size: smaller;
+  margin-top: 5em;
+  text-align: center;
+}
+
+/** Titles **/
+hgroup h1 {
+  margin: 0;
+}
+hgroup h1 + h2 {
+  font-color: gray;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+}
+#title {
+  padding-left: 60px;
+  padding-top: 100px;
+}
+#title h2 {
+  color: #886e5c;
+  padding-left: 12px;
+  padding-top: 20px;
+}
+
+/** Links **/
+a, a:visited {
+  color: #886e5c;
+  text-decoration: none;
+}
+a:hover, a.current {
+  color: #71b3ba;
+}
+
+/** Wishlist **/
+ul.dashed {
+  list-style-type: none;
+}
+ul.dashed li:before {
+  content: "-";
+  position: relative;
+  left: -5px;
+}
+ul.dashed li {
+  text-indent: -5px;
+}
+.item, .cost {
+  display: inline-block;
+}
+.item {
+  width: 15em;
+}
+.cost {
+  width: 4em;
+  text-align: right;
+}

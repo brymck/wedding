@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+require "fileutils"
+
+THIS_DIR = File.expand_path(File.dirname(__FILE__))
+output_dir = File.join(THIS_DIR, "dist")
+partials_dir = File.join(output_dir, "partials")
+FileUtils.mkdir_p partials_dir
+
+files = Dir.glob(File.join(THIS_DIR, "*.html"))
+
+# Remove header and footer partials
+files.delete_if { |f| File.basename(f).start_with?("_") }
+
+def read_partial(name)
+  path = File.join(THIS_DIR, "_#{name}.html")
+  File.read path
+end
+
+header = read_partial("header")
+footer = read_partial("footer")
+
+puts "Writing..."
+files.each do |input|
+  basename = File.basename(input, ".html")
+  basename_ext = "#{basename}.php"
+
+  linked_header = header.sub(/a href="#{basename == "index" ? "" : basename}(\.html)?"/, "#{$&} class=\"current\"") 
+  puts "  #{basename}"
+  File.open(File.join(output_dir, basename_ext), "w") do |output|
+    output.puts linked_header
+    output.puts File.read(input)
+    output.puts footer
+  end
+
+  FileUtils.cp input, File.join(partials_dir, basename_ext)
+end
+
+puts "Moving static assets"
+FileUtils.cp Dir.glob(File.join(THIS_DIR, "static", "*")), output_dir
