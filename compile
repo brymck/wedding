@@ -24,11 +24,17 @@ files.each do |input|
   basename = File.basename(input, ".html")
   basename_ext = "#{basename}.php"
 
-  linked_header = header.sub(/a href="#{basename == "index" ? "" : basename}(\.html)?"/, "#{$&} class=\"current\"") 
+  linked_header = header.sub(/a href\="#{basename == "index" ? "\." : basename}"/) do |s|
+    s + ' class="current"'
+  end
+  input_text = File.read(input)
+  title = basename == "index" ? "Maiko &amp; Bryan" : input_text[/(?<=\<h1\>).*(?=\<\/h1\>)/]
+  linked_header.sub! /\<title\>(.*)\<\/title\>/, "<title>#{title}</title>"
+
   puts "  #{basename}"
   File.open(File.join(output_dir, basename_ext), "w") do |output|
     output.puts linked_header
-    output.puts File.read(input)
+    output.puts input_text
     output.puts footer
   end
 

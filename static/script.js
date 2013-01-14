@@ -56,11 +56,13 @@ function pjaxNav() {
     // Move currently highlighted link
     $nav_anchors.removeClass("current");
     $a.addClass("current");
+    var title = $a.text();
 
     $.ajax({
       url: partialsPath(href)
     }).done(function(response) {
-      history.pushState(null, null, href === "" ? "." : href);
+      document.title = title;
+      history.pushState(null, title, href);
       $pjaxContainer.fadeOut("fast", function() {
         $pjaxContainer.html(response);
         $pjaxContainer.fadeIn();

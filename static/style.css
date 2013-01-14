@@ -48,6 +48,9 @@ hgroup h1 + h2 {
   font-weight: normal;
   margin: 0;
 }
+article h2 {
+  font-size: larger;
+}
 #title {
   padding-left: 60px;
   padding-top: 100px;
@@ -68,16 +71,9 @@ a:hover, a.current {
 }
 
 /** Wishlist **/
-ul.dashed {
+article ul {
   list-style-type: none;
-}
-ul.dashed li:before {
-  content: "-";
-  position: relative;
-  left: -5px;
-}
-ul.dashed li {
-  text-indent: -5px;
+  padding-left: 0;
 }
 .item, .cost {
   display: inline-block;
@@ -88,4 +84,9 @@ ul.dashed li {
 .cost {
   width: 4em;
   text-align: right;
+}
+
+/** Miscellaneous styling **/
+.indent {
+  padding-left: 1em;
 }
