@@ -2,7 +2,9 @@
 require "fileutils"
 
 THIS_DIR = File.expand_path(File.dirname(__FILE__))
-output_dir = File.join(THIS_DIR, "dist")
+STATIC_DIRNAME = "static"
+OUTPUT_DIRNAME = "dist"
+output_dir = File.join(THIS_DIR, OUTPUT_DIRNAME)
 partials_dir = File.join(output_dir, "partials")
 FileUtils.mkdir_p partials_dir
 
@@ -14,6 +16,15 @@ files.delete_if { |f| File.basename(f).start_with?("_") }
 def read_partial(name)
   path = File.join(THIS_DIR, "_#{name}.html")
   File.read path
+end
+
+def static_to_output_path(path)
+  dirs = path.split("/")
+  last_match = dirs.rindex(STATIC_DIRNAME)
+  return path if last_match.nil?
+
+  dirs[last_match] = OUTPUT_DIRNAME
+  dirs.join "/"
 end
 
 header = read_partial("header")
@@ -41,5 +52,16 @@ files.each do |input|
   FileUtils.cp input, File.join(partials_dir, basename_ext)
 end
 
-puts "Moving static assets"
-FileUtils.cp_r Dir.glob(File.join(THIS_DIR, "static", "*")), output_dir
+puts "Moving static assets..."
+Dir.glob(File.join(THIS_DIR, "static", "**", "*" )).each do |file|
+  output_path = static_to_output_path(file)
+
+  if File.directory?(file)
+    FileUtils.mkdir_p output_path
+  else
+    if !File.exists?(output_path) || File.mtime(file) > File.mtime(output_path)
+      puts "  #{File.basename(file)}"
+      FileUtils.cp file, output_path
+    end
+  end
+end
