@@ -1,5 +1,10 @@
 var DAY_COUNT = "#day_count";
-var WEDDING_DATE = new Date(2013, 4, 27);
+var WEDDING_DATE = new Date(2013, 3, 27);
+var remembered = {
+  number:  1,
+  wedding: true,
+  friday:  true
+};
 
 // Floating the navigation bar
 function stickyNav() {
@@ -30,6 +35,32 @@ function stickyNav() {
       }
     }
   });
+}
+
+function checkAttendance() {
+  var attending = document.getElementById("attending");
+  if (attending) {
+    var status  = attending.checked;
+    var number  = document.getElementById("number");
+    var wedding = document.getElementById("wedding");
+    var friday  = document.getElementById("friday");
+
+    if (status) {
+      number.value    = remembered.number;
+      wedding.checked = remembered.wedding;
+      friday.checked  = remembered.friday;
+    } else {
+      remembered.number  = number.value;
+      remembered.wedding = wedding.checked;
+      remembered.friday  = friday.checked;
+      number.value = 0;
+      wedding.checked = false;
+      friday.checked = false;
+    }
+    number.disabled  = !status;
+    wedding.disabled = !status;
+    friday.disabled  = !status;
+  }
 }
 
 function partialsPath(href) {
