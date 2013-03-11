@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-$name      = $_POST["name"];
-$email     = $_POST["email"];
+$name      = stripslashes($_POST["name"]);
+$email     = stripslashes($_POST["email"]);
 $attending = $_POST["attending"] === "on" ? "yes" : "no";
 $number    = $_POST["number"];
 $wedding   = $_POST["wedding"] === "on" ? "yes" : "no";
 $friday    = $_POST["friday"]  === "on" ? "yes" : "no";
-$notes     = $_POST["notes"];
+$notes     = stripslashes($_POST["notes"]);
 $errors    = array();
 
 if (trim($name) === "") {
@@ -16,10 +16,18 @@ if (trim($name) === "") {
 
 if (trim($email) === "") {
   array_push($errors, "no_email");
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  array_push($errors, "bad_email");
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  array_push($errors, "bad_email");
+if ($attending === "yes") {
+  if ($number === "0") {
+    array_push($errors, "no_one");
+  }
+
+  if ($wedding === "no" && $friday === "no") {
+    array_push($errors, "no_event");
+  }
 }
 
 if (count($errors) !== 0) {

@@ -33,6 +33,12 @@
             <?php if (in_array("bad_email", $errors)): ?>
             <li>Email doesn't seem valid</li>
             <?php endif; ?>
+            <?php if (in_array("no_one", $errors)): ?>
+            <li>No one's attending?</li>
+            <?php endif; ?>
+            <?php if (in_array("no_event", $errors)): ?>
+            <li>Which event(s) are you attending?</li>
+            <?php endif; ?>
           </ul>
         </div>
         <?php endif; ?>
