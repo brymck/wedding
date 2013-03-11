@@ -8,13 +8,13 @@ output_dir = File.join(THIS_DIR, OUTPUT_DIRNAME)
 partials_dir = File.join(output_dir, "partials")
 FileUtils.mkdir_p partials_dir
 
-files = Dir.glob(File.join(THIS_DIR, "*.html"))
+files = Dir.glob(File.join(THIS_DIR, "*.php"))
 
 # Remove header and footer partials
 files.delete_if { |f| File.basename(f).start_with?("_") }
 
 def read_partial(name)
-  path = File.join(THIS_DIR, "_#{name}.html")
+  path = File.join(THIS_DIR, "_#{name}.php")
   File.read path
 end
 
@@ -32,7 +32,7 @@ footer = read_partial("footer")
 
 puts "Writing..."
 files.each do |input|
-  basename = File.basename(input, ".html")
+  basename = File.basename(input, ".php")
   basename_ext = "#{basename}.php"
 
   linked_header = header.sub(/a href\="#{basename == "index" ? "\." : basename}"/) do |s|
