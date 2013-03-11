@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $name      = $_POST["name"];
 $email     = $_POST["email"];
 $attending = $_POST["attending"] === "on" ? "yes" : "no";
@@ -6,6 +8,33 @@ $number    = $_POST["number"];
 $wedding   = $_POST["wedding"] === "on" ? "yes" : "no";
 $friday    = $_POST["friday"]  === "on" ? "yes" : "no";
 $notes     = $_POST["notes"];
+$errors    = array();
+
+if (trim($name) === "") {
+  array_push($errors, "no_name");
+}
+
+if (trim($email) === "") {
+  array_push($errors, "no_email");
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  array_push($errors, "bad_email");
+}
+
+if (count($errors) !== 0) {
+  $_SESSION["name"]      = $name;
+  $_SESSION["email"]     = $email;
+  $_SESSION["attending"] = $attending;
+  $_SESSION["number"]    = $number;
+  $_SESSION["wedding"]   = $wedding;
+  $_SESSION["friday"]    = $friday;
+  $_SESSION["notes"]     = $notes;
+  $_SESSION["errors"]    = $errors;
+
+  header("Location: /wedding/rsvp");
+  exit(0);
+}
 
 $to = "Bryan McKelvey <bryan.mckelvey@gmail.com>, $name <$email>";
 $headers = "MIME-Version: 1.0\r\n" .
@@ -40,5 +69,6 @@ END;
 
 mail($to, $subject, $content, $headers)
   or die("Your mail could not be sent. Feel free to send this content to bryan.mckelvey@gmail.com, though:\n$content");
+session_destroy();
 header("Location: /wedding/thanks");
 ?>

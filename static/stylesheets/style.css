@@ -137,6 +137,7 @@ form input[type=submit] {
   border-radius: 6px;
   border: 1px solid #dcdcdc;
   color: #777;
+  cursor: pointer;
   padding: 6px 24px;
   text-shadow: 1px 1px 0px #ffffff;
 }
@@ -149,6 +150,18 @@ form input[type=submit]:hover {
 form input[type=submit]:active {
   position: relative;
   top: 1px;
+}
+
+/** Notice **/
+.notice {
+  background-color: pink;
+  border: solid 1px darkred;
+  color: darkred;
+  padding: 0 0.5em;
+}
+.notice ul {
+  list-style-type: disc;
+  padding-left: 1em;
 }
 
 /** Miscellaneous styling **/
